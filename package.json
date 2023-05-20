@@ -1,0 +1,17 @@
+{
+  "name": "@suey/printer",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "npx tsc ./test/index.ts",
+    "build": "tsc -p ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "csstype": "^3.1.2"
+  }
+}

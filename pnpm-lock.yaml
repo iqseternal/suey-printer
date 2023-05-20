@@ -1,0 +1,13 @@
+lockfileVersion: 5.3
+
+specifiers:
+  csstype: ^3.1.2
+
+devDependencies:
+  csstype: 3.1.2
+
+packages:
+
+  /csstype/3.1.2:
+    resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
+    dev: true
