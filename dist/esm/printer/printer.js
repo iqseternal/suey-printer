@@ -9,37 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { print, toColor, toPrintClear } from "../core/core";
 import { Effect } from '../decorator/decorator';
-/**
- * 清除之前的打印带来的副作用
- */
 export function printClear() {
     console.log(toPrintClear());
 }
-/**
- * 打印一条日志
- * @param message
- */
 export function printInfo(...message) {
     print(toColor('blue'), ...message);
 }
-/**
- * 打印一条警告信息
- * @param message
- */
 export function printWarn(...message) {
     print(toColor('yellow'), ...message);
 }
-/**
- * 打印一条错误信息
- * @param message
- */
 export function printError(...message) {
     print(toColor('red'), ...message);
 }
-/**
- * 打印调用栈信息
- * @param message
- */
 export function printTrace(...message) {
     print('还没写怎么打印调用栈');
 }

@@ -1,6 +1,6 @@
 {
   "name": "@suey/printer",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "./dist/esm/index.js",
   "types": "./dist/lib/index.d.ts",
@@ -14,9 +14,9 @@
   "scripts": {
     "test": "npx tsc ./test/index.ts",
     "build": "pnpm build-commonjs && pnpm build-esm && pnpm build-types",
-    "build-esm": "tsc -p . --outDir ./dist/esm --module ESNext --declaration false",
-    "build-commonjs": "tsc -p . --outDir ./dist/commonjs --module commonjs --declaration false",
-    "build-types": "tsc -p . --outDir ./dist/lib --emitDeclarationOnly"
+    "build-esm": "tsc -p . --outDir ./dist/esm --module ESNext --declaration false --removeComments true",
+    "build-commonjs": "tsc -p . --outDir ./dist/commonjs --module commonjs --declaration false --removeComments true",
+    "build-types": "tsc -p . --outDir ./dist/lib --emitDeclarationOnly --removeComments false"
   },
   "keywords": [],
   "author": "",

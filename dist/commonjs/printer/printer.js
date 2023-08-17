@@ -12,41 +12,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Printer = exports.printTrace = exports.printError = exports.printWarn = exports.printInfo = exports.printClear = void 0;
 const core_1 = require("../core/core");
 const decorator_1 = require("../decorator/decorator");
-/**
- * 清除之前的打印带来的副作用
- */
 function printClear() {
     console.log((0, core_1.toPrintClear)());
 }
 exports.printClear = printClear;
-/**
- * 打印一条日志
- * @param message
- */
 function printInfo(...message) {
     (0, core_1.print)((0, core_1.toColor)('blue'), ...message);
 }
 exports.printInfo = printInfo;
-/**
- * 打印一条警告信息
- * @param message
- */
 function printWarn(...message) {
     (0, core_1.print)((0, core_1.toColor)('yellow'), ...message);
 }
 exports.printWarn = printWarn;
-/**
- * 打印一条错误信息
- * @param message
- */
 function printError(...message) {
     (0, core_1.print)((0, core_1.toColor)('red'), ...message);
 }
 exports.printError = printError;
-/**
- * 打印调用栈信息
- * @param message
- */
 function printTrace(...message) {
     (0, core_1.print)('还没写怎么打印调用栈');
 }

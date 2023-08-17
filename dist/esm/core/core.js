@@ -1,16 +1,7 @@
 import { STYLE, keyToAnsi, DEFINE_MESSAGE } from '../define/define';
-/**
- * 清除 ANSI 带来的效果
- * @returns {string} 格式化清除字符串
- */
 export function toPrintClear() {
     return keyToAnsi[STYLE.NORMAL];
 }
-/**
- * 识别目标的格式化信息，返回目标所对应的格式化字符串
- * @param {any} target 目标对象
- * @returns {PrintTargetType} 得到需要打印的格式化字符信息
- */
 export function toPrintType(target) {
     if (typeof target === 'number')
         return '%f';
@@ -37,11 +28,6 @@ export function toPrintStyle(style, ...message) {
             })}:${style[key]};`;
     return [typeBuffer, styleBuffer];
 }
-/**
- * 获得最终的格式化输出数组
- * @param {T[]} arr 需要格式化输出的信息
- * @returns {PrintMessageArray<T>} 返回格式化后的数组信息, 并给这个格式化数组加上唯一标识, 以供 print 函数的识别
- */
 export function toPrintArr(arr) {
     arr.constructor.prototype.__process_id__ = DEFINE_MESSAGE.PRINTER_MESSAGE_ARR_FALG;
     return arr;
@@ -50,22 +36,6 @@ export function toColor(style, ...message) {
     const styleBufferArr = toPrintStyle(style, ...message);
     return toPrintArr([...styleBufferArr, ...message]);
 }
-/**
- * 调用这个函数你可以格式化打印你想要的信息, 相比于 console.log, 此函数的调用更加符合函数化, 人性化
- * 请注意, 由于控制台所处于的平台不同, 可能出现打印失效的情况
- * 例如：CSS 样式, 可能在 Windows 控制台中可能就会出现不支持的情况
- * 目前 ANSI 模式表现良好
- *
- * @example print('HelloWorld'); // 无格式化信息
- * @example print('color: red;', 'HelloWorld'); // 红色HelloWorld字体信息
- * @example print(toColor('red', 'HelloWorld'), '你的打印信息的位置可以自己选择'); // 使用toColor配合,红色字体信息
- * @example print(toColor('red'), 'HelloWrold'); // 使用toColor配合,红色字体信息
- * @example print(toColor(['white', 'red:bg']), 'HelloWorld'); // 使用toColor创建多ANSI格式的样式
- * @example print(toColor({ color: 'red' }), 'HelloWrold'); // 使用toColor创建css格式的样式, 用这个方式相较于直接书写css更加友好,具有ts类型提示
- *
- * @param {...unknown[]} message 需要打印的信息
- * @returns {void}
- */
 export function print(...message) {
     let buffer = '';
     let idx = 0;
@@ -99,7 +69,7 @@ export function print(...message) {
                 return;
             }
             if (matches !== 0) {
-                buffer += ms; // 描述格式化字符
+                buffer += ms;
                 idx = matches;
             }
         }
