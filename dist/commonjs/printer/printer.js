@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,66 +8,79 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { print, toColor } from "../core/core";
-import { Effect } from '../decorator/decorator';
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Printer = exports.printTrace = exports.printError = exports.printWarn = exports.printInfo = exports.printClear = void 0;
+const core_1 = require("../core/core");
+const decorator_1 = require("../decorator/decorator");
+/**
+ * 清除之前的打印带来的副作用
+ */
+function printClear() {
+    console.log((0, core_1.toPrintClear)());
+}
+exports.printClear = printClear;
 /**
  * 打印一条日志
  * @param message
  */
-export function printInfo(...message) {
-    print(toColor('blue'), ...message);
+function printInfo(...message) {
+    (0, core_1.print)((0, core_1.toColor)('blue'), ...message);
 }
+exports.printInfo = printInfo;
 /**
  * 打印一条警告信息
  * @param message
  */
-export function printWarn(...message) {
-    print(toColor('yellow'), ...message);
+function printWarn(...message) {
+    (0, core_1.print)((0, core_1.toColor)('yellow'), ...message);
 }
+exports.printWarn = printWarn;
 /**
  * 打印一条错误信息
  * @param message
  */
-export function printError(...message) {
-    print(toColor({ color: 'red' }), ...message);
+function printError(...message) {
+    (0, core_1.print)((0, core_1.toColor)('red'), ...message);
 }
+exports.printError = printError;
 /**
  * 打印调用栈信息
  * @param message
  */
-export function printTrace(...message) {
-    print('还没写怎么打印调用栈');
+function printTrace(...message) {
+    (0, core_1.print)('还没写怎么打印调用栈');
 }
+exports.printTrace = printTrace;
 class Printer {
     static middleWare = () => (void 0);
     constructor(middleWare) {
         Printer.middleWare = middleWare;
     }
-    print = print;
+    print = core_1.print;
     printInfo = printInfo;
     printWarn = printWarn;
     printError = printError;
     printTrace = printTrace;
 }
+exports.Printer = Printer;
 __decorate([
-    Effect(Printer.middleWare),
+    (0, decorator_1.Effect)(Printer.middleWare),
     __metadata("design:type", Object)
 ], Printer.prototype, "print", void 0);
 __decorate([
-    Effect(Printer.middleWare),
+    (0, decorator_1.Effect)(Printer.middleWare),
     __metadata("design:type", Object)
 ], Printer.prototype, "printInfo", void 0);
 __decorate([
-    Effect(Printer.middleWare),
+    (0, decorator_1.Effect)(Printer.middleWare),
     __metadata("design:type", Object)
 ], Printer.prototype, "printWarn", void 0);
 __decorate([
-    Effect(Printer.middleWare),
+    (0, decorator_1.Effect)(Printer.middleWare),
     __metadata("design:type", Object)
 ], Printer.prototype, "printError", void 0);
 __decorate([
-    Effect(Printer.middleWare),
+    (0, decorator_1.Effect)(Printer.middleWare),
     __metadata("design:type", Object)
 ], Printer.prototype, "printTrace", void 0);
-export { Printer };
 //# sourceMappingURL=printer.js.map

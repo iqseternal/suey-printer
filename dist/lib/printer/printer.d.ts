@@ -1,5 +1,9 @@
 import { print } from "../core/core";
 /**
+ * 清除之前的打印带来的副作用
+ */
+export declare function printClear(): void;
+/**
  * 打印一条日志
  * @param message
  */

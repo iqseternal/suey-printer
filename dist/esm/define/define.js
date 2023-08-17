@@ -1,5 +1,5 @@
 /** 定义的 ANSI 枚举 */
-class STYLE {
+export class STYLE {
     /** 正常 */
     static NORMAL = 'normal';
     /** 粗体或增加强度 */
@@ -73,7 +73,6 @@ class STYLE {
     CYAN_BG = STYLE.CYAN_BG;
     WHITE_BG = STYLE.WHITE_BG;
 }
-export { STYLE };
 /** ANSI 自定义 Key 转换对象 */
 export const keyToAnsi = {
     [STYLE.NORMAL]: '\x1B[0m',

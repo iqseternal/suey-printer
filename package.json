@@ -1,17 +1,31 @@
 {
   "name": "@suey/printer",
-  "version": "1.0.1",
+  "version": "1.0.7",
   "description": "",
-  "main": "index.js",
-  "type": "module",
+  "main": "./dist/esm/index.js",
+  "types": "./dist/lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "types": "./dist/lib/index.d.ts",
+      "require": "./dist/commonjs/index.js"
+    }
+  },
   "scripts": {
     "test": "npx tsc ./test/index.ts",
-    "build": "tsc -p ."
+    "build": "pnpm build-commonjs && pnpm build-esm && pnpm build-types",
+    "build-esm": "tsc -p . --outDir ./dist/esm --module ESNext --declaration false",
+    "build-commonjs": "tsc -p . --outDir ./dist/commonjs --module commonjs --declaration false",
+    "build-types": "tsc -p . --outDir ./dist/lib --emitDeclarationOnly"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "csstype": "^3.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "typescript": "^5.1.6"
   }
 }
