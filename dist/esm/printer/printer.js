@@ -11,6 +11,7 @@ import { print, toColor, toPrintClear } from "../core/core";
 import { Effect } from '../decorator/decorator';
 export function printClear() {
     console.log(toPrintClear());
+    console.clear();
 }
 export function printInfo(...message) {
     print(toColor('blue'), ...message);

@@ -14,6 +14,7 @@ const core_1 = require("../core/core");
 const decorator_1 = require("../decorator/decorator");
 function printClear() {
     console.log((0, core_1.toPrintClear)());
+    console.clear();
 }
 exports.printClear = printClear;
 function printInfo(...message) {

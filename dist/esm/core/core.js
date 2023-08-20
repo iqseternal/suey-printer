@@ -37,37 +37,34 @@ export function toPrintArr(arr) {
 }
 export function toColor(style, ...message) {
     const styleBufferArr = toPrintStyle(style);
-    return toPrintArr([styleBufferArr, ...message]);
+    return toPrintArr([toPrintClear() + styleBufferArr, ...message]);
 }
 export function print(...message) {
     const typeArr = [];
     const msgArr = [];
     message.forEach(ms => {
         if (Array.isArray(ms) && ms.__process_id__ === DEFINE_MESSAGE.PRINTER_MESSAGE_ARR_FLAG) {
-            const type = ms.shift();
-            if (type !== '')
-                typeArr.push(type);
-            msgArr.push(...ms);
+            let type = ms.shift();
+            for (let i = 0; i < ms.length; i++)
+                type += toPrintType(ms[i]);
+            typeArr.push(type);
+            if (ms.length)
+                msgArr.push(...ms);
             return;
         }
         if (Array.isArray(ms)) {
-            msgArr.push(...ms);
+            ms.forEach(m => {
+                typeArr.push(toPrintType(m));
+                msgArr.push(m);
+            });
         }
         if (typeof ms === 'string' && (ms.startsWith('\x1B[') || ms.includes('%c') || ms.includes('%s'))) {
-            msgArr.push(ms);
+            typeArr.push(ms);
             return;
         }
+        typeArr.push(toPrintType(ms));
         msgArr.push(ms);
     });
-    let typeBuffer = toPrintClear();
-    let msgIndex = 0;
-    typeArr.forEach(types => {
-        typeBuffer += types;
-        if (msgIndex < msgArr.length) {
-            typeBuffer += toPrintType(msgArr[msgIndex]);
-            msgIndex++;
-        }
-    });
-    console.log(typeBuffer, ...msgArr);
+    console.log(typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr);
 }
 //# sourceMappingURL=core.js.map
