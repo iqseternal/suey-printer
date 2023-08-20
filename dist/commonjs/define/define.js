@@ -79,6 +79,7 @@ exports.keyToAnsi = {
     [STYLE.WHITE_BG]: '\x1B[47m'
 };
 exports.DEFINE_MESSAGE = {
-    PRINTER_MESSAGE_ARR_FALG: '__suey_printer_process_id__'
+    PRINTER_MESSAGE_ARR_FLAG: '__suey_printer_process_id__',
+    PRINTER_MESSAGE_CLEAR_FLAG: '__suey_printer_process_id__'
 };
 //# sourceMappingURL=define.js.map

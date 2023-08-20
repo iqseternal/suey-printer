@@ -3,10 +3,16 @@ import { StandardLonghandProperties } from 'csstype';
 /** 格式化打印字符 */
 export type PrintTargetType = '%s' | '%d' | '%i' | '%f' | '%o' | '%O';
 /**
+ * 格式化清空字符
+ */
+export interface PrintMessageClear extends String {
+    __process_id__: string;
+}
+/**
  * 清除 ANSI 带来的效果
  * @returns {string} 格式化清除字符串
  */
-export declare function toPrintClear(): string;
+export declare function toPrintClear(): PrintMessageClear;
 /**
  * 识别目标的格式化信息，返回目标所对应的格式化字符串
  * @param {any} target 目标对象
@@ -19,7 +25,7 @@ export declare function toPrintType(target: any): PrintTargetType;
  * @param {...unknown[]} message 需要打印的信息
  * @returns {[string, ...unknown[]]} 返回格式化打印的数组，其中第一个参数是格式化打印信息, 紧缩其后的是需要打印的信息
  */
-export declare function toPrintStyle(style: StandardLonghandProperties, ...message: unknown[]): string[];
+export declare function toPrintStyle(style: StandardLonghandProperties): string;
 /**
  * 通过获得打印的格式化 ANSI 创建格式化打印数组, 需要传递message参数, 以获得每一个对象的格式化类型
  * 该打印效果会影响之后的打印信息
@@ -27,7 +33,7 @@ export declare function toPrintStyle(style: StandardLonghandProperties, ...messa
  * @param {...unknown[]} message 需要打印的信息
  * @returns {[string, ...unknown[]]} 返回格式化打印的数组，其中第一个参数是格式化打印信息, 紧缩其后的是需要打印的信息
  */
-export declare function toPrintStyle(style: StyleKey | StyleKey[], ...message: unknown[]): string[];
+export declare function toPrintStyle(style: StyleKey | StyleKey[]): string;
 /** 格式化打印的最后输出数组 */
 export interface PrintMessageArray<T> extends Array<T> {
     /** 为这个数组创建的唯一标识 */
