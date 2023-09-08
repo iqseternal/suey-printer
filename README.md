@@ -19,8 +19,6 @@ import { print, printInfo, printWarn, printError } from '@suey/printer';
 
 print('HelloWorld'); // 无格式化信息
 
-print('color: red;', 'HelloWorld'); // 红色 HelloWorld 字体信息, 自动识别 css 样式
-
 print(toColor('red', 'HelloWorld'), '你的打印信息的位置可以自己选择'); // 使用toColor配合,红色字体信息
 
 print(toColor('red'), 'HelloWrold'); // 使用toColor配合,红色字体信息
@@ -37,4 +35,43 @@ printError('error'); // 打印一条错误信息, 红色字体
 
 ```
 
+
+
+```javascript
+import { Printer } from '@suey/printer';
+// 通过 Printer 类获得你想要的日志打印格式
+
+Printer.print('hello');
+
+Printer.printInfo('hello');
+
+Printer.printWarn('hello');
+
+Printer.printError('hello');
+
+// 在此中你可以设置打印的内容, 打印的格式
+// init 会改变所有 Printer 静态方法上的打印格式. 如果你需要创建一个特殊额, 请使用 new 关键字为其生成一个对象
+Printer.init({}, {});
+
+type PrintOptions = Partial<{
+  autoPrintName: boolean; // 是否自动打印 NAME
+  printName: string; // NAME 值
+
+  autoPrintTime: boolean; // 是否自动打印时间
+  printTime: () => string; // 时间的获取函数
+
+  autoPrintType: boolean; // 是否自动打印类型, 例如 INFO, WARN
+  printType: string; // 打印类型, 其中固定方法不能被覆盖
+
+  autoPrintThead: boolean; // 是否自动打印所在线程, 默认为 MAIN 主线程, 你可以自定义
+  printThead: string; // 线程名字
+}>;
+
+type ColorInfo = Partial<{ // 对应上述类型, 要求返回一个格式化样式信息, 使用 toColor 函数创造样式信息
+  printName: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
+  printTIme: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
+  printType: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
+  printThead: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
+}>;
+```
 

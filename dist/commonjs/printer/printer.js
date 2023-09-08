@@ -1,25 +1,96 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.printTrace = exports.printError = exports.printWarn = exports.printInfo = exports.printClear = void 0;
-const core_1 = require("../core/core");
-function printClear() {
-    console.log((0, core_1.toPrintClear)());
+exports.Printer = void 0;
+const core_1 = require("../core");
+class Printer {
+    printOptions;
+    printColors;
+    static printer = new Printer();
+    static init = (options) => (Printer.printer = new Printer(options));
+    static print = (...message) => Printer.printer.print(...message);
+    static printInfo = (...message) => Printer.printer.printInfo(...message);
+    static printWarn = (...message) => Printer.printer.printWarn(...message);
+    static printError = (...message) => Printer.printer.printError(...message);
+    constructor(printOptions = {
+        autoPrintName: true,
+        printName: 'PRINTER',
+        autoPrintTime: true,
+        printTime: () => new Date().getFullYear() + '',
+        autoPrintThead: true,
+        printThead: 'MAIN',
+        autoPrintType: true,
+        printType: 'NORMAL'
+    }, printColors) {
+        this.printOptions = printOptions;
+        this.printColors = printColors;
+    }
+    printMessage(newOptions, colors, ...message) {
+        const options = { ...this.printOptions, ...newOptions };
+        const colorInfo = { ...this.printColors, ...colors };
+        const messageArr = [];
+        if (options.autoPrintName && typeof options.printName === 'string') {
+            if (colorInfo.printName)
+                messageArr.push(colorInfo.printName);
+            messageArr.push(`[${options.printName}]`);
+            messageArr.push((0, core_1.toPrintClear)());
+            messageArr.push(' ');
+        }
+        if (options.autoPrintTime && typeof options.printTime === 'function') {
+            if (colorInfo.printTIme)
+                messageArr.push(colorInfo.printTIme);
+            messageArr.push(`[${options.printTime()}]`);
+            messageArr.push((0, core_1.toPrintClear)());
+            messageArr.push(' ');
+        }
+        if (options.autoPrintType && typeof options.printType === 'string') {
+            if (colorInfo.printType)
+                messageArr.push(colorInfo.printType);
+            messageArr.push(`[${options.printType}]`);
+            messageArr.push((0, core_1.toPrintClear)());
+            messageArr.push(' ');
+        }
+        if (options.autoPrintThead && typeof options.printThead === 'string') {
+            if (colorInfo.printThead)
+                messageArr.push(colorInfo.printThead);
+            messageArr.push(`[${options.printThead}]`);
+            messageArr.push((0, core_1.toPrintClear)());
+            messageArr.push(': ');
+        }
+        (0, core_1.print)(...messageArr, ...message);
+    }
+    print(...message) {
+        this.printMessage({}, {}, ...message);
+    }
+    printInfo(...message) {
+        this.printMessage({
+            printType: 'INFO',
+        }, {
+            printName: (0, core_1.toColor)(['magenta', 'bright']),
+            printTIme: (0, core_1.toColor)(['cyan', 'bright']),
+            printType: (0, core_1.toColor)(['blue', 'underline']),
+            printThead: (0, core_1.toColor)(['blue'])
+        }, ...message);
+    }
+    printWarn(...message) {
+        this.printMessage({
+            printType: 'WARN',
+        }, {
+            printName: (0, core_1.toColor)(['magenta', 'bright']),
+            printTIme: (0, core_1.toColor)(['cyan', 'bright']),
+            printType: (0, core_1.toColor)(['yellow', 'underline']),
+            printThead: (0, core_1.toColor)(['yellow'])
+        }, ...message);
+    }
+    printError(...message) {
+        this.printMessage({
+            printType: 'ERROR',
+        }, {
+            printName: (0, core_1.toColor)(['magenta', 'bright']),
+            printTIme: (0, core_1.toColor)(['cyan', 'bright']),
+            printType: (0, core_1.toColor)(['red', 'underline']),
+            printThead: (0, core_1.toColor)(['red'])
+        }, ...message);
+    }
 }
-exports.printClear = printClear;
-function printInfo(...message) {
-    (0, core_1.print)((0, core_1.toColor)('blue'), ...message);
-}
-exports.printInfo = printInfo;
-function printWarn(...message) {
-    (0, core_1.print)((0, core_1.toColor)('yellow'), ...message);
-}
-exports.printWarn = printWarn;
-function printError(...message) {
-    (0, core_1.print)((0, core_1.toColor)('red'), ...message);
-}
-exports.printError = printError;
-function printTrace(...message) {
-    (0, core_1.print)('还没写怎么打印调用栈');
-}
-exports.printTrace = printTrace;
+exports.Printer = Printer;
 //# sourceMappingURL=printer.js.map
