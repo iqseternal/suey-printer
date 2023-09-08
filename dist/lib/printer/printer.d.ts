@@ -1,4 +1,3 @@
-import { print } from "../core/core";
 /**
  * 清除之前的打印带来的副作用
  */
@@ -23,12 +22,3 @@ export declare function printError(...message: unknown[]): void;
  * @param message
  */
 export declare function printTrace(...message: unknown[]): void;
-export declare class Printer {
-    private static middleWare;
-    constructor(middleWare: (target?: object, key?: string | symbol) => void);
-    print: typeof print;
-    printInfo: typeof printInfo;
-    printWarn: typeof printWarn;
-    printError: typeof printError;
-    printTrace: typeof printTrace;
-}

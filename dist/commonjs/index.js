@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.printClear = exports.printError = exports.printWarn = exports.printInfo = exports.Printer = exports.keyToAnsi = exports.STYLE = exports.Effect = exports.toPrintArr = exports.toPrintClear = exports.toPrintStyle = exports.toPrintType = exports.toColor = exports.print = void 0;
+exports.printClear = exports.printError = exports.printWarn = exports.printInfo = exports.keyToAnsi = exports.STYLE = exports.Effect = exports.toPrintArr = exports.toPrintClear = exports.toPrintStyle = exports.toPrintType = exports.toColor = exports.print = void 0;
 var core_1 = require("./core/core");
 Object.defineProperty(exports, "print", { enumerable: true, get: function () { return core_1.print; } });
 Object.defineProperty(exports, "toColor", { enumerable: true, get: function () { return core_1.toColor; } });
@@ -14,7 +14,6 @@ var define_1 = require("./define/define");
 Object.defineProperty(exports, "STYLE", { enumerable: true, get: function () { return define_1.STYLE; } });
 Object.defineProperty(exports, "keyToAnsi", { enumerable: true, get: function () { return define_1.keyToAnsi; } });
 var printer_1 = require("./printer/printer");
-Object.defineProperty(exports, "Printer", { enumerable: true, get: function () { return printer_1.Printer; } });
 Object.defineProperty(exports, "printInfo", { enumerable: true, get: function () { return printer_1.printInfo; } });
 Object.defineProperty(exports, "printWarn", { enumerable: true, get: function () { return printer_1.printWarn; } });
 Object.defineProperty(exports, "printError", { enumerable: true, get: function () { return printer_1.printError; } });

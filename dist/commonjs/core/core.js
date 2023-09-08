@@ -2,11 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.print = exports.toColor = exports.toPrintArr = exports.toPrintStyle = exports.toPrintType = exports.toPrintClear = void 0;
 const define_1 = require("../define/define");
-function toPrintClear() {
-    const clearMsg = define_1.keyToAnsi[define_1.STYLE.NORMAL];
-    clearMsg.constructor.prototype.__process_id__ = define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_CLEAR_FLAG;
-    return clearMsg;
+class __SYMBLE_MESSAGE__ {
+    data;
+    flag;
+    constructor(data, flag) {
+        this.data = data;
+        this.flag = flag;
+    }
 }
+class __SYMBLE_ARRAY__ {
+    data;
+    constructor(data) {
+        this.data = data;
+    }
+}
+const toPrintClear = () => define_1.keyToAnsi[define_1.STYLE.NORMAL];
 exports.toPrintClear = toPrintClear;
 function toPrintType(target) {
     if (typeof target === 'number')
@@ -20,9 +30,9 @@ function toPrintType(target) {
 exports.toPrintType = toPrintType;
 function toPrintStyle(style) {
     if (typeof style === 'string')
-        return define_1.keyToAnsi[style] ?? '';
+        return new __SYMBLE_MESSAGE__(define_1.keyToAnsi[style] ?? '', define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG);
     if (Array.isArray(style))
-        return style.reduce((pre, cur) => pre + (define_1.keyToAnsi[cur] ?? ''), '');
+        return new __SYMBLE_MESSAGE__(style.reduce((pre, cur) => pre + (define_1.keyToAnsi[cur] ?? ''), ''), define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG);
     if (typeof style === 'object') {
         let styleBuffer = '';
         for (const key in style) {
@@ -32,39 +42,46 @@ function toPrintStyle(style) {
                 })}:${style[key]};`;
             }
         }
-        return styleBuffer;
+        return new __SYMBLE_MESSAGE__(styleBuffer, define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_CSS_STYLE_FLAG);
     }
-    return '';
+    return new __SYMBLE_MESSAGE__('', define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG);
 }
 exports.toPrintStyle = toPrintStyle;
-function toPrintArr(arr) {
-    arr.constructor.prototype.__process_id__ = define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_ARR_FLAG;
-    return arr;
-}
+const toPrintArr = (arr) => new __SYMBLE_MESSAGE__(arr, define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_ARR_FLAG);
 exports.toPrintArr = toPrintArr;
 function toColor(style, ...message) {
     const styleBufferArr = toPrintStyle(style);
-    return toPrintArr([toPrintClear() + styleBufferArr, ...message]);
+    if (styleBufferArr.flag === define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_CSS_STYLE_FLAG) {
+        return new __SYMBLE_ARRAY__([(0, exports.toPrintClear)(), styleBufferArr, ...message]);
+    }
+    if (styleBufferArr.flag === define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG) {
+        return new __SYMBLE_ARRAY__([(0, exports.toPrintClear)() + styleBufferArr.data, ...message]);
+    }
+    return new __SYMBLE_ARRAY__(['']);
 }
 exports.toColor = toColor;
 function print(...message) {
     const typeArr = [];
     const msgArr = [];
     message.forEach(ms => {
-        if (Array.isArray(ms) && ms.__process_id__ === define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_ARR_FLAG) {
-            let type = ms.shift();
-            for (let i = 0; i < ms.length; i++)
-                type += toPrintType(ms[i]);
+        if (ms instanceof __SYMBLE_ARRAY__) {
+            const data = ms.data;
+            let type = data.shift();
+            for (let i = 0; i < data.length; i++) {
+                if (data[i] instanceof __SYMBLE_MESSAGE__) {
+                    if (data[i].flag === define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_CSS_STYLE_FLAG) {
+                        type += '%c';
+                        msgArr.push(data[i].data);
+                    }
+                    if (data[i].flag === define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG)
+                        type += data[i].data;
+                    continue;
+                }
+                type += toPrintType(data[i]);
+                msgArr.push(data[i]);
+            }
             typeArr.push(type);
-            if (ms.length)
-                msgArr.push(...ms);
             return;
-        }
-        if (Array.isArray(ms)) {
-            ms.forEach(m => {
-                typeArr.push(toPrintType(m));
-                msgArr.push(m);
-            });
         }
         if (typeof ms === 'string' && (ms.startsWith('\x1B[') || ms.includes('%c') || ms.includes('%s'))) {
             typeArr.push(ms);

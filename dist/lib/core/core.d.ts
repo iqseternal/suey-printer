@@ -1,18 +1,21 @@
-import { StyleKey } from '../define/define';
+import { StyleKey, DEFINE_MESSAGE } from '../define/define';
 import { StandardLonghandProperties } from 'csstype';
 /** 格式化打印字符 */
 export type PrintTargetType = '%s' | '%d' | '%i' | '%f' | '%o' | '%O';
-/**
- * 格式化清空字符
- */
-export interface PrintMessageClear extends String {
-    __process_id__: string;
+declare class __SYMBLE_MESSAGE__<T> {
+    readonly data: T;
+    readonly flag: typeof DEFINE_MESSAGE[keyof typeof DEFINE_MESSAGE];
+    constructor(data: T, flag: typeof DEFINE_MESSAGE[keyof typeof DEFINE_MESSAGE]);
+}
+declare class __SYMBLE_ARRAY__<T> {
+    readonly data: T;
+    constructor(data: T);
 }
 /**
  * 清除 ANSI 带来的效果
  * @returns {string} 格式化清除字符串
  */
-export declare function toPrintClear(): PrintMessageClear;
+export declare const toPrintClear: () => string;
 /**
  * 识别目标的格式化信息，返回目标所对应的格式化字符串
  * @param {any} target 目标对象
@@ -20,47 +23,27 @@ export declare function toPrintClear(): PrintMessageClear;
  */
 export declare function toPrintType(target: any): PrintTargetType;
 /**
- * 通过获得打印的格式化 css 样式创建格式化打印数组, 需要传递message参数, 以获得每一个对象的格式化类型
- * @param {StandardLonghandProperties} style 需要格式化打印的目标css对象
- * @param {...unknown[]} message 需要打印的信息
- * @returns {[string, ...unknown[]]} 返回格式化打印的数组，其中第一个参数是格式化打印信息, 紧缩其后的是需要打印的信息
- */
-export declare function toPrintStyle(style: StandardLonghandProperties): string;
-/**
- * 通过获得打印的格式化 ANSI 创建格式化打印数组, 需要传递message参数, 以获得每一个对象的格式化类型
+ * 通过获得打印的格式化 css / ANSI 创建格式化打印数组, 需要传递message参数, 以获得每一个对象的格式化类型
  * 该打印效果会影响之后的打印信息
  * @param {StyleKey | StyleKey[]} style 需要格式化打印的目标的格式化 ANSI
  * @param {...unknown[]} message 需要打印的信息
  * @returns {[string, ...unknown[]]} 返回格式化打印的数组，其中第一个参数是格式化打印信息, 紧缩其后的是需要打印的信息
  */
-export declare function toPrintStyle(style: StyleKey | StyleKey[]): string;
-/** 格式化打印的最后输出数组 */
-export interface PrintMessageArray<T> extends Array<T> {
-    /** 为这个数组创建的唯一标识 */
-    __process_id__: string;
-}
+export declare function toPrintStyle(style: StyleKey | StyleKey[] | StandardLonghandProperties): __SYMBLE_MESSAGE__<string>;
 /**
  * 获得最终的格式化输出数组
  * @param {T[]} arr 需要格式化输出的信息
  * @returns {PrintMessageArray<T>} 返回格式化后的数组信息, 并给这个格式化数组加上唯一标识, 以供 print 函数的识别
  */
-export declare function toPrintArr<T>(arr: T[]): PrintMessageArray<T>;
+export declare const toPrintArr: <T>(arr: T[]) => __SYMBLE_MESSAGE__<T[]>;
 /**
  * 创建一份格式化打印的样式信息, 通过建立这个样式信息, 可以让紧随其后的信息格式化打印.
- * 该函数需要你传递一个 css 样式对象创建格式化样式信息
- * @param {StandardLonghandProperties} style css 样式信息
- * @param {...T[]} message 需要格式化打印的信息
- * @returns {PrintMessageArray<string | T>} 返回格式化输出数组
- */
-export declare function toColor<T>(style: StandardLonghandProperties, ...message: T[]): PrintMessageArray<string | T>;
-/**
- * 创建一份格式化打印的样式信息, 通过建立这个样式信息, 可以让紧随其后的信息格式化打印.
- * 该函数需要你传递一个 ANSI 标识或者 ANSI 标识数组以标识格式化样式信息
+ * 该函数需要你传递一个 CSS / ANSI 标识或者 CSS / ANSI 标识数组以标识格式化样式信息
  * @param {StyleKey | StyleKey[]} style ANSI 样式信息
  * @param {...T[]} message 需要格式化打印的信息
  * @returns {PrintMessageArray<string | T>} 返回格式化输出数组
  */
-export declare function toColor<T>(style: StyleKey | StyleKey[], ...message: T[]): PrintMessageArray<string | T>;
+export declare function toColor<T>(style: StyleKey | StyleKey[] | StandardLonghandProperties, ...message: T[]): __SYMBLE_ARRAY__<[string, ...((string | T | __SYMBLE_MESSAGE__<string>)[])]>;
 /**
  * 调用这个函数你可以格式化打印你想要的信息, 相比于 console.log, 此函数的调用更加符合函数化, 人性化
  * 请注意, 由于控制台所处于的平台不同, 可能出现打印失效的情况
@@ -78,3 +61,4 @@ export declare function toColor<T>(style: StyleKey | StyleKey[], ...message: T[]
  * @returns {void}
  */
 export declare function print(...message: unknown[]): void;
+export {};

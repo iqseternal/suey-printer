@@ -1,9 +1,19 @@
 import { STYLE, keyToAnsi, DEFINE_MESSAGE } from '../define/define';
-export function toPrintClear() {
-    const clearMsg = keyToAnsi[STYLE.NORMAL];
-    clearMsg.constructor.prototype.__process_id__ = DEFINE_MESSAGE.PRINTER_MESSAGE_CLEAR_FLAG;
-    return clearMsg;
+class __SYMBLE_MESSAGE__ {
+    data;
+    flag;
+    constructor(data, flag) {
+        this.data = data;
+        this.flag = flag;
+    }
 }
+class __SYMBLE_ARRAY__ {
+    data;
+    constructor(data) {
+        this.data = data;
+    }
+}
+export const toPrintClear = () => keyToAnsi[STYLE.NORMAL];
 export function toPrintType(target) {
     if (typeof target === 'number')
         return '%f';
@@ -15,9 +25,9 @@ export function toPrintType(target) {
 }
 export function toPrintStyle(style) {
     if (typeof style === 'string')
-        return keyToAnsi[style] ?? '';
+        return new __SYMBLE_MESSAGE__(keyToAnsi[style] ?? '', DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG);
     if (Array.isArray(style))
-        return style.reduce((pre, cur) => pre + (keyToAnsi[cur] ?? ''), '');
+        return new __SYMBLE_MESSAGE__(style.reduce((pre, cur) => pre + (keyToAnsi[cur] ?? ''), ''), DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG);
     if (typeof style === 'object') {
         let styleBuffer = '';
         for (const key in style) {
@@ -27,36 +37,43 @@ export function toPrintStyle(style) {
                 })}:${style[key]};`;
             }
         }
-        return styleBuffer;
+        return new __SYMBLE_MESSAGE__(styleBuffer, DEFINE_MESSAGE.PRINTER_MESSAGE_CSS_STYLE_FLAG);
     }
-    return '';
+    return new __SYMBLE_MESSAGE__('', DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG);
 }
-export function toPrintArr(arr) {
-    arr.constructor.prototype.__process_id__ = DEFINE_MESSAGE.PRINTER_MESSAGE_ARR_FLAG;
-    return arr;
-}
+export const toPrintArr = (arr) => new __SYMBLE_MESSAGE__(arr, DEFINE_MESSAGE.PRINTER_MESSAGE_ARR_FLAG);
 export function toColor(style, ...message) {
     const styleBufferArr = toPrintStyle(style);
-    return toPrintArr([toPrintClear() + styleBufferArr, ...message]);
+    if (styleBufferArr.flag === DEFINE_MESSAGE.PRINTER_MESSAGE_CSS_STYLE_FLAG) {
+        return new __SYMBLE_ARRAY__([toPrintClear(), styleBufferArr, ...message]);
+    }
+    if (styleBufferArr.flag === DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG) {
+        return new __SYMBLE_ARRAY__([toPrintClear() + styleBufferArr.data, ...message]);
+    }
+    return new __SYMBLE_ARRAY__(['']);
 }
 export function print(...message) {
     const typeArr = [];
     const msgArr = [];
     message.forEach(ms => {
-        if (Array.isArray(ms) && ms.__process_id__ === DEFINE_MESSAGE.PRINTER_MESSAGE_ARR_FLAG) {
-            let type = ms.shift();
-            for (let i = 0; i < ms.length; i++)
-                type += toPrintType(ms[i]);
+        if (ms instanceof __SYMBLE_ARRAY__) {
+            const data = ms.data;
+            let type = data.shift();
+            for (let i = 0; i < data.length; i++) {
+                if (data[i] instanceof __SYMBLE_MESSAGE__) {
+                    if (data[i].flag === DEFINE_MESSAGE.PRINTER_MESSAGE_CSS_STYLE_FLAG) {
+                        type += '%c';
+                        msgArr.push(data[i].data);
+                    }
+                    if (data[i].flag === DEFINE_MESSAGE.PRINTER_MESSAGE_ANSI_STYLE_FLAG)
+                        type += data[i].data;
+                    continue;
+                }
+                type += toPrintType(data[i]);
+                msgArr.push(data[i]);
+            }
             typeArr.push(type);
-            if (ms.length)
-                msgArr.push(...ms);
             return;
-        }
-        if (Array.isArray(ms)) {
-            ms.forEach(m => {
-                typeArr.push(toPrintType(m));
-                msgArr.push(m);
-            });
         }
         if (typeof ms === 'string' && (ms.startsWith('\x1B[') || ms.includes('%c') || ms.includes('%s'))) {
             typeArr.push(ms);
