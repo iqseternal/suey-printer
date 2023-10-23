@@ -35,6 +35,12 @@ export declare const toPrintArr: <T>(arr: T[]) => __SYMBLE_MESSAGE__<T[]>;
  */
 export declare function toColor<T>(style: StyleKey | StyleKey[] | StandardLonghandProperties, ...message: T[]): __SYMBLE_ARRAY__<[string, ...((string | T | __SYMBLE_MESSAGE__<string>)[])]>;
 /**
+ * 转换打印 message, 可以直接 console.log(...toPrintMessage(xxxxxx)) 调用
+ * @param message
+ * @returns
+ */
+export declare function toPrintMessage(...message: unknown[]): unknown[];
+/**
  * 调用这个函数你可以格式化打印你想要的信息, 相比于 console.log, 此函数的调用更加符合函数化, 人性化
  * 请注意, 由于控制台所处于的平台不同, 可能出现打印失效的情况
  * 例如：CSS 样式, 可能在 Windows 控制台中可能就会出现不支持的情况

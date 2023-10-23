@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.print = exports.toColor = exports.toPrintArr = exports.toPrintStyle = exports.toPrintType = exports.toPrintClear = void 0;
+exports.print = exports.toPrintMessage = exports.toColor = exports.toPrintArr = exports.toPrintStyle = exports.toPrintType = exports.toPrintClear = void 0;
 const define_1 = require("../define");
 const messageType_1 = require("./messageType");
 const toPrintClear = () => define_1.keyToAnsi[define_1.STYLE.NORMAL];
@@ -47,7 +47,9 @@ function toColor(style, ...message) {
     return new messageType_1.__SYMBLE_ARRAY__(['']);
 }
 exports.toColor = toColor;
-function print(...message) {
+function toPrintMessage(...message) {
+    message.unshift((0, exports.toPrintClear)());
+    message.push((0, exports.toPrintClear)());
     const typeArr = [];
     const msgArr = [];
     message.forEach(ms => {
@@ -77,7 +79,11 @@ function print(...message) {
         typeArr.push(toPrintType(ms));
         msgArr.push(ms);
     });
-    console.log(typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr);
+    return [typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr];
+}
+exports.toPrintMessage = toPrintMessage;
+function print(...message) {
+    console.log(...toPrintMessage(message));
 }
 exports.print = print;
 //# sourceMappingURL=print.js.map

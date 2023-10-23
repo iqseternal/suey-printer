@@ -39,7 +39,9 @@ export function toColor(style, ...message) {
     }
     return new __SYMBLE_ARRAY__(['']);
 }
-export function print(...message) {
+export function toPrintMessage(...message) {
+    message.unshift(toPrintClear());
+    message.push(toPrintClear());
     const typeArr = [];
     const msgArr = [];
     message.forEach(ms => {
@@ -69,6 +71,9 @@ export function print(...message) {
         typeArr.push(toPrintType(ms));
         msgArr.push(ms);
     });
-    console.log(typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr);
+    return [typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr];
+}
+export function print(...message) {
+    console.log(...toPrintMessage(message));
 }
 //# sourceMappingURL=print.js.map
