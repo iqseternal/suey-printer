@@ -53,26 +53,18 @@ export class Printer {
     if (options.autoPrintName && typeof options.printName === 'string') {
       if (colorInfo.printName) messageArr.push(colorInfo.printName);
       messageArr.push(`[${options.printName}]`);
-      messageArr.push(toPrintClear());
-      messageArr.push(' ');
     }
     if (options.autoPrintTime && typeof options.printTime === 'function') {
       if (colorInfo.printTIme) messageArr.push(colorInfo.printTIme);
       messageArr.push(`[${options.printTime()}]`);
-      messageArr.push(toPrintClear());
-      messageArr.push(' ');
     }
     if (options.autoPrintType && typeof options.printType === 'string') {
       if (colorInfo.printType) messageArr.push(colorInfo.printType);
       messageArr.push(`[${options.printType}]`);
-      messageArr.push(toPrintClear());
-      messageArr.push(' ');
     }
     if (options.autoPrintThead && typeof options.printThead === 'string') {
       if (colorInfo.printThead) messageArr.push(colorInfo.printThead);
-      messageArr.push(`[${options.printThead}]`);
-      messageArr.push(toPrintClear());
-      messageArr.push(': ');
+      messageArr.push(`[${options.printThead}]:`);
     }
 
     print(...messageArr, ...message);

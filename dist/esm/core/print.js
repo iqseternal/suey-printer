@@ -70,10 +70,17 @@ export function toPrintMessage(...message) {
         }
         typeArr.push(toPrintType(ms));
         msgArr.push(ms);
+        typeArr.push(`${toPrintClear()}%s`);
+        msgArr.push(' ');
     });
+    console.log(typeArr, msgArr);
+    const d = typeArr.pop();
+    typeArr.pop();
+    typeArr.push(d);
+    msgArr.pop();
     return [typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr];
 }
 export function print(...message) {
-    console.log(...toPrintMessage(message));
+    console.log(...toPrintMessage(...message));
 }
 //# sourceMappingURL=print.js.map

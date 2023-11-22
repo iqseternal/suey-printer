@@ -111,10 +111,16 @@ export function toPrintMessage(...message: unknown[]): unknown[] {
           continue;
         }
         type += toPrintType(data[i]);
+        // type += '%s';
         msgArr.push(data[i]);
+        // msgArr.push(' ');
+        // type.push('%s');
+        // msgArr.push(' ');
       }
 
       typeArr.push(type);
+      // typeArr.push('%s');
+      // msgArr.push(' ');
       return;
     }
 
@@ -127,7 +133,16 @@ export function toPrintMessage(...message: unknown[]): unknown[] {
 
     typeArr.push(toPrintType(ms));
     msgArr.push(ms);
+
+    typeArr.push(`${toPrintClear()}%s`);
+    msgArr.push(' ');
   });
+
+  console.log(typeArr, msgArr);
+  const d = typeArr.pop();
+  typeArr.pop();
+  typeArr.push(d);
+  msgArr.pop();
 
   return [typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr];
 }
@@ -148,5 +163,5 @@ export function toPrintMessage(...message: unknown[]): unknown[] {
  * @returns {void}
  */
 export function print(...message: unknown[]): void {
-  console.log(...toPrintMessage(message));
+  console.log(...toPrintMessage(...message));
 }
