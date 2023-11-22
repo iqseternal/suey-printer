@@ -90,7 +90,6 @@ export function toColor<T>(style: StyleKey | StyleKey[] | StandardLonghandProper
  */
 export function toPrintMessage(...message: unknown[]): unknown[] {
   message.unshift(toPrintClear());
-  message.push(toPrintClear());
 
   const typeArr: string[] = [];
   const msgArr: unknown[] = [];
@@ -116,11 +115,7 @@ export function toPrintMessage(...message: unknown[]): unknown[] {
         msgArr.push(' ');
       }
 
-      typeArr.push(type);
-      if (msgArr.length !== 0 && data.length !== 0) {
-        typeArr.push('%s');
-        msgArr.push(' ');
-      }
+      if (type) typeArr.push(type);
       return;
     }
 
@@ -135,15 +130,15 @@ export function toPrintMessage(...message: unknown[]): unknown[] {
     msgArr.push(ms);
 
     if (msgArr.length !== 0) {
-      typeArr.push(`${toPrintClear()}%s`);
+      typeArr.push(`%s`);
       msgArr.push(' ');
     }
   });
 
-  const d = typeArr.pop();
-  typeArr.pop();
-  typeArr.push(d);
+  typeArr.push(toPrintClear());
+
   msgArr.pop();
+  msgArr.push('');
 
   return [typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr];
 }

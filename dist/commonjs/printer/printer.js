@@ -39,9 +39,10 @@ class Printer {
             messageArr.push(`[${options.printTime()}]`);
         }
         if (options.autoPrintType && typeof options.printType === 'string') {
+            messageArr.push((0, core_1.toPrintClear)());
             if (colorInfo.printType)
                 messageArr.push(colorInfo.printType);
-            messageArr.push(`[${options.printType}]`);
+            messageArr.push(`[${options.printType}]${(0, core_1.toPrintClear)()}`);
         }
         if (options.autoPrintThead && typeof options.printThead === 'string') {
             if (colorInfo.printThead)

@@ -1,4 +1,4 @@
-import { print, toColor } from '../core';
+import { print, toColor, toPrintClear } from '../core';
 export class Printer {
     printOptions;
     printColors;
@@ -36,9 +36,10 @@ export class Printer {
             messageArr.push(`[${options.printTime()}]`);
         }
         if (options.autoPrintType && typeof options.printType === 'string') {
+            messageArr.push(toPrintClear());
             if (colorInfo.printType)
                 messageArr.push(colorInfo.printType);
-            messageArr.push(`[${options.printType}]`);
+            messageArr.push(`[${options.printType}]${toPrintClear()}`);
         }
         if (options.autoPrintThead && typeof options.printThead === 'string') {
             if (colorInfo.printThead)

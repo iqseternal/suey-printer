@@ -58,11 +58,17 @@ export class Printer {
       if (colorInfo.printTIme) messageArr.push(colorInfo.printTIme);
       messageArr.push(`[${options.printTime()}]`);
     }
+
     if (options.autoPrintType && typeof options.printType === 'string') {
+
+      messageArr.push(toPrintClear());
       if (colorInfo.printType) messageArr.push(colorInfo.printType);
-      messageArr.push(`[${options.printType}]`);
+
+      messageArr.push(`[${options.printType}]${toPrintClear()}`);
+
     }
     if (options.autoPrintThead && typeof options.printThead === 'string') {
+
       if (colorInfo.printThead) messageArr.push(colorInfo.printThead);
       messageArr.push(`[${options.printThead}]:`);
     }

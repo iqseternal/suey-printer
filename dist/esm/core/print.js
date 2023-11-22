@@ -41,7 +41,6 @@ export function toColor(style, ...message) {
 }
 export function toPrintMessage(...message) {
     message.unshift(toPrintClear());
-    message.push(toPrintClear());
     const typeArr = [];
     const msgArr = [];
     message.forEach(ms => {
@@ -63,11 +62,8 @@ export function toPrintMessage(...message) {
                 msgArr.push(data[i]);
                 msgArr.push(' ');
             }
-            typeArr.push(type);
-            if (msgArr.length !== 0 && data.length !== 0) {
-                typeArr.push('%s');
-                msgArr.push(' ');
-            }
+            if (type)
+                typeArr.push(type);
             return;
         }
         if (typeof ms === 'string' && (ms.startsWith('\x1B[') || ms.includes('%c') || ms.includes('%s'))) {
@@ -77,14 +73,13 @@ export function toPrintMessage(...message) {
         typeArr.push(toPrintType(ms));
         msgArr.push(ms);
         if (msgArr.length !== 0) {
-            typeArr.push(`${toPrintClear()}%s`);
+            typeArr.push(`%s`);
             msgArr.push(' ');
         }
     });
-    const d = typeArr.pop();
-    typeArr.pop();
-    typeArr.push(d);
+    typeArr.push(toPrintClear());
     msgArr.pop();
+    msgArr.push('');
     return [typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr];
 }
 export function print(...message) {

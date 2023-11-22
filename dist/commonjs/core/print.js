@@ -49,7 +49,6 @@ function toColor(style, ...message) {
 exports.toColor = toColor;
 function toPrintMessage(...message) {
     message.unshift((0, exports.toPrintClear)());
-    message.push((0, exports.toPrintClear)());
     const typeArr = [];
     const msgArr = [];
     message.forEach(ms => {
@@ -71,11 +70,8 @@ function toPrintMessage(...message) {
                 msgArr.push(data[i]);
                 msgArr.push(' ');
             }
-            typeArr.push(type);
-            if (msgArr.length !== 0 && data.length !== 0) {
-                typeArr.push('%s');
-                msgArr.push(' ');
-            }
+            if (type)
+                typeArr.push(type);
             return;
         }
         if (typeof ms === 'string' && (ms.startsWith('\x1B[') || ms.includes('%c') || ms.includes('%s'))) {
@@ -85,14 +81,13 @@ function toPrintMessage(...message) {
         typeArr.push(toPrintType(ms));
         msgArr.push(ms);
         if (msgArr.length !== 0) {
-            typeArr.push(`${(0, exports.toPrintClear)()}%s`);
+            typeArr.push(`%s`);
             msgArr.push(' ');
         }
     });
-    const d = typeArr.pop();
-    typeArr.pop();
-    typeArr.push(d);
+    typeArr.push((0, exports.toPrintClear)());
     msgArr.pop();
+    msgArr.push('');
     return [typeArr.reduce((pre, cur) => pre + cur, ''), ...msgArr];
 }
 exports.toPrintMessage = toPrintMessage;
