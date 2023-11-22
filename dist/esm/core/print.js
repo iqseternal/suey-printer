@@ -59,9 +59,15 @@ export function toPrintMessage(...message) {
                     continue;
                 }
                 type += toPrintType(data[i]);
+                type += '%s';
                 msgArr.push(data[i]);
+                msgArr.push(' ');
             }
             typeArr.push(type);
+            if (msgArr.length !== 0 && data.length !== 0) {
+                typeArr.push('%s');
+                msgArr.push(' ');
+            }
             return;
         }
         if (typeof ms === 'string' && (ms.startsWith('\x1B[') || ms.includes('%c') || ms.includes('%s'))) {
@@ -70,10 +76,11 @@ export function toPrintMessage(...message) {
         }
         typeArr.push(toPrintType(ms));
         msgArr.push(ms);
-        typeArr.push(`${toPrintClear()}%s`);
-        msgArr.push(' ');
+        if (msgArr.length !== 0) {
+            typeArr.push(`${toPrintClear()}%s`);
+            msgArr.push(' ');
+        }
     });
-    console.log(typeArr, msgArr);
     const d = typeArr.pop();
     typeArr.pop();
     typeArr.push(d);

@@ -66,7 +66,6 @@ export class Printer {
       if (colorInfo.printThead) messageArr.push(colorInfo.printThead);
       messageArr.push(`[${options.printThead}]:`);
     }
-
     print(...messageArr, ...message);
   }
 
