@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.print = exports.toPrintMessage = exports.toColor = exports.toPrintArr = exports.toPrintStyle = exports.toPrintType = exports.toPrintClear = void 0;
+exports.isPrintStyleMessageArr = exports.isPrintStyleMessage = exports.print = exports.toPrintMessage = exports.toColor = exports.toPrintArr = exports.toPrintStyle = exports.toPrintType = exports.toPrintClear = void 0;
 const define_1 = require("../define");
 const messageType_1 = require("./messageType");
 const toPrintClear = () => define_1.keyToAnsi[define_1.STYLE.NORMAL];
@@ -95,4 +95,12 @@ function print(...message) {
     console.log(...toPrintMessage(...message));
 }
 exports.print = print;
+const isPrintStyleMessage = (target) => {
+    return target instanceof messageType_1.__SYMBLE_ARRAY__;
+};
+exports.isPrintStyleMessage = isPrintStyleMessage;
+const isPrintStyleMessageArr = (target) => {
+    return target instanceof messageType_1.__SYMBLE_MESSAGE__;
+};
+exports.isPrintStyleMessageArr = isPrintStyleMessageArr;
 //# sourceMappingURL=print.js.map

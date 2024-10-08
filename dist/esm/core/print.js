@@ -85,4 +85,10 @@ export function toPrintMessage(...message) {
 export function print(...message) {
     console.log(...toPrintMessage(...message));
 }
+export const isPrintStyleMessage = (target) => {
+    return target instanceof __SYMBLE_ARRAY__;
+};
+export const isPrintStyleMessageArr = (target) => {
+    return target instanceof __SYMBLE_MESSAGE__;
+};
 //# sourceMappingURL=print.js.map

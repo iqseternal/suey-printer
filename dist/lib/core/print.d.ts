@@ -56,3 +56,5 @@ export declare function toPrintMessage(...message: unknown[]): unknown[];
  * @returns {void}
  */
 export declare function print(...message: unknown[]): void;
+export declare const isPrintStyleMessage: <T>(target: T | __SYMBLE_ARRAY__<[string, ...(string | __SYMBLE_MESSAGE__<string>)[]]>) => target is __SYMBLE_ARRAY__<[string, ...(string | __SYMBLE_MESSAGE__<string>)[]]>;
+export declare const isPrintStyleMessageArr: <T>(target: __SYMBLE_MESSAGE__<string> | T) => target is __SYMBLE_MESSAGE__<string>;
