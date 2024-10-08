@@ -3,7 +3,7 @@
 
 export type { PrintTargetType } from './core/messageType';
 
-export { print, toColor, toPrintType, toPrintStyle, toPrintClear, toPrintArr } from './core/print';
+export { print, toColor, toPrintType, toPrintStyle, toPrintClear, toPrintArr, isPrintStyleMessage, isPrintStyleMessageArr } from './core/print';
 
 export { STYLE, type StyleKey, keyToAnsi, type Key, type KeyVal, type KeyToAnsi } from './define';
 
