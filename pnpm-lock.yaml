@@ -4,15 +4,13 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  csstype:
-    specifier: ^3.1.2
-    version: 3.1.2
-
 devDependencies:
   '@types/node':
     specifier: ^20.5.0
     version: 20.5.0
+  csstype:
+    specifier: ^3.1.2
+    version: 3.1.2
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
@@ -25,7 +23,7 @@ packages:
 
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
-    dev: false
+    dev: true
 
   /typescript@5.1.6:
     resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}

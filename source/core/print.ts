@@ -161,3 +161,12 @@ export function toPrintMessage(...message: unknown[]): unknown[] {
 export function print(...message: unknown[]): void {
   console.log(...toPrintMessage(...message));
 }
+
+
+export const isPrintStyleMessage = <T>(target: T | __SYMBLE_ARRAY__<[string, ...((string | __SYMBLE_MESSAGE__<string>)[])]>): target is __SYMBLE_ARRAY__<[string, ...((string | __SYMBLE_MESSAGE__<string>)[])]> => {
+  return target instanceof __SYMBLE_ARRAY__;
+}
+
+export const isPrintStyleMessageArr = <T>(target: T | __SYMBLE_MESSAGE__<string>): target is __SYMBLE_MESSAGE__<string> => {
+  return target instanceof __SYMBLE_MESSAGE__;
+}
