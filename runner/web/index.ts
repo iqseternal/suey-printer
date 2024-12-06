@@ -20,5 +20,8 @@ print(toColor({
 }), 'hello world!')
 
 
-Printer.printError('asdads');
-Printer.printSuccess('asdads');
+Printer.printInfo('info');
+Printer.printWarn('warn');
+Printer.printError('error');
+Printer.printSuccess('success');
+
