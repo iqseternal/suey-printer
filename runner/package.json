@@ -1,0 +1,23 @@
+{
+  "name": "runner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "dev:node": "tsnd -r tsconfig-paths/register --respawn ./node/index.ts",
+    "dev:web": "rsbuild dev --config ./web/rsbuild.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iqseternal/suey-pkg-utils.git"
+  },
+  "private": true,
+  "devDependencies": {
+    "@rsbuild/core": "^1.1.8",
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

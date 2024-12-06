@@ -1,6 +1,10 @@
 
 /**/node_modules
-/test
-/source
+/runner
+/src
+/.gitignore
+/.npmignore
+/.npmrc
+/pnpm-lock.yaml
 /tsconfig.json
 

@@ -8,6 +8,7 @@ export class Printer {
     static printInfo = (...message) => Printer.printer.printInfo(...message);
     static printWarn = (...message) => Printer.printer.printWarn(...message);
     static printError = (...message) => Printer.printer.printError(...message);
+    static printSuccess = (...message) => Printer.printer.printSuccess(...message);
     constructor(printOptions = {
         autoPrintName: true,
         printName: 'PRINTER',
@@ -17,7 +18,7 @@ export class Printer {
         printThead: 'MAIN',
         autoPrintType: true,
         printType: 'NORMAL'
-    }, printColors) {
+    }, printColors = {}) {
         this.printOptions = printOptions;
         this.printColors = printColors;
     }
@@ -31,8 +32,8 @@ export class Printer {
             messageArr.push(`[${options.printName}]`);
         }
         if (options.autoPrintTime && typeof options.printTime === 'function') {
-            if (colorInfo.printTIme)
-                messageArr.push(colorInfo.printTIme);
+            if (colorInfo.printTime)
+                messageArr.push(colorInfo.printTime);
             messageArr.push(`[${options.printTime()}]`);
         }
         if (options.autoPrintType && typeof options.printType === 'string') {
@@ -56,7 +57,7 @@ export class Printer {
             printType: 'INFO',
         }, {
             printName: toColor(['magenta', 'bright']),
-            printTIme: toColor(['cyan', 'bright']),
+            printTime: toColor(['cyan', 'bright']),
             printType: toColor(['blue', 'underline']),
             printThead: toColor(['blue'])
         }, ...message);
@@ -66,7 +67,7 @@ export class Printer {
             printType: 'WARN',
         }, {
             printName: toColor(['magenta', 'bright']),
-            printTIme: toColor(['cyan', 'bright']),
+            printTime: toColor(['cyan', 'bright']),
             printType: toColor(['yellow', 'underline']),
             printThead: toColor(['yellow'])
         }, ...message);
@@ -76,9 +77,19 @@ export class Printer {
             printType: 'ERROR',
         }, {
             printName: toColor(['magenta', 'bright']),
-            printTIme: toColor(['cyan', 'bright']),
+            printTime: toColor(['cyan', 'bright']),
             printType: toColor(['red', 'underline']),
             printThead: toColor(['red'])
+        }, ...message);
+    }
+    printSuccess(...message) {
+        this.printMessage({
+            printType: 'SUCCESS',
+        }, {
+            printName: toColor(['magenta', 'bright']),
+            printTime: toColor(['cyan', 'bright']),
+            printType: toColor(['green', 'underline']),
+            printThead: toColor(['green'])
         }, ...message);
     }
 }

@@ -11,6 +11,7 @@ class Printer {
     static printInfo = (...message) => Printer.printer.printInfo(...message);
     static printWarn = (...message) => Printer.printer.printWarn(...message);
     static printError = (...message) => Printer.printer.printError(...message);
+    static printSuccess = (...message) => Printer.printer.printSuccess(...message);
     constructor(printOptions = {
         autoPrintName: true,
         printName: 'PRINTER',
@@ -20,7 +21,7 @@ class Printer {
         printThead: 'MAIN',
         autoPrintType: true,
         printType: 'NORMAL'
-    }, printColors) {
+    }, printColors = {}) {
         this.printOptions = printOptions;
         this.printColors = printColors;
     }
@@ -34,8 +35,8 @@ class Printer {
             messageArr.push(`[${options.printName}]`);
         }
         if (options.autoPrintTime && typeof options.printTime === 'function') {
-            if (colorInfo.printTIme)
-                messageArr.push(colorInfo.printTIme);
+            if (colorInfo.printTime)
+                messageArr.push(colorInfo.printTime);
             messageArr.push(`[${options.printTime()}]`);
         }
         if (options.autoPrintType && typeof options.printType === 'string') {
@@ -59,7 +60,7 @@ class Printer {
             printType: 'INFO',
         }, {
             printName: (0, core_1.toColor)(['magenta', 'bright']),
-            printTIme: (0, core_1.toColor)(['cyan', 'bright']),
+            printTime: (0, core_1.toColor)(['cyan', 'bright']),
             printType: (0, core_1.toColor)(['blue', 'underline']),
             printThead: (0, core_1.toColor)(['blue'])
         }, ...message);
@@ -69,7 +70,7 @@ class Printer {
             printType: 'WARN',
         }, {
             printName: (0, core_1.toColor)(['magenta', 'bright']),
-            printTIme: (0, core_1.toColor)(['cyan', 'bright']),
+            printTime: (0, core_1.toColor)(['cyan', 'bright']),
             printType: (0, core_1.toColor)(['yellow', 'underline']),
             printThead: (0, core_1.toColor)(['yellow'])
         }, ...message);
@@ -79,9 +80,19 @@ class Printer {
             printType: 'ERROR',
         }, {
             printName: (0, core_1.toColor)(['magenta', 'bright']),
-            printTIme: (0, core_1.toColor)(['cyan', 'bright']),
+            printTime: (0, core_1.toColor)(['cyan', 'bright']),
             printType: (0, core_1.toColor)(['red', 'underline']),
             printThead: (0, core_1.toColor)(['red'])
+        }, ...message);
+    }
+    printSuccess(...message) {
+        this.printMessage({
+            printType: 'SUCCESS',
+        }, {
+            printName: (0, core_1.toColor)(['magenta', 'bright']),
+            printTime: (0, core_1.toColor)(['cyan', 'bright']),
+            printType: (0, core_1.toColor)(['green', 'underline']),
+            printThead: (0, core_1.toColor)(['green'])
         }, ...message);
     }
 }
