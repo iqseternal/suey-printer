@@ -8,6 +8,9 @@
 
 `npm install @suey/printer --save`
 
+![alt text](./assets/image.png)
+
+![alt text](./assets/image-1.png)
 
 ```javascript
 import { print, printInfo, printWarn, printError } from '@suey/printer';
