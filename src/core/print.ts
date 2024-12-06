@@ -32,6 +32,15 @@ export class __SYMBOL_ARRAY__<T> {
 }
 
 /**
+ * 判断目标是否时 ansi 创建的样式信息
+ */
+export const isAnsiStyleMessage = (target: unknown): target is __SYMBOL_MESSAGE__<string> => target instanceof __SYMBOL_MESSAGE__;
+/**
+ * 判断目标是否时 ansi 创建的样式信息数组
+ */
+export const isAnsiStyleMessageArr = (target: unknown): target is __SYMBOL_ARRAY__<[string, ...((string | __SYMBOL_MESSAGE__<string>)[])]> => target instanceof __SYMBOL_ARRAY__;
+
+/**
  * 清除 ANSI 带来的效果
  * @returns {string} 格式化清除字符串
  */
