@@ -8,11 +8,10 @@ export type PrintTargetType = '%s' | '%d' | '%i' | '%f' | '%o' | '%O';
 
 
 
-export class __SYMBLE_MESSAGE__<T> {
+export class __SYMBOL_MESSAGE__<T> {
   constructor(public readonly data: T, public readonly flag: typeof DEFINE_MESSAGE[keyof typeof DEFINE_MESSAGE]) {}
 }
 
-export class __SYMBLE_ARRAY__<T> {
+export class __SYMBOL_ARRAY__<T> {
   constructor(public readonly data: T) {}
 }
-

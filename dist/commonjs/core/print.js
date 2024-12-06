@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isPrintStyleMessageArr = exports.isPrintStyleMessage = exports.print = exports.toPrintMessage = exports.toColor = exports.toPrintArr = exports.toPrintStyle = exports.toPrintType = exports.toPrintClear = void 0;
+exports.isPrintStyleMessage = exports.isPrintStyleMessageArr = exports.print = exports.toPrintMessage = exports.toColor = exports.toPrintArr = exports.toPrintStyle = exports.toPrintType = exports.toPrintClear = void 0;
 const define_1 = require("../define");
 const messageType_1 = require("./messageType");
 const toPrintClear = () => define_1.keyToAnsi[define_1.STYLE.NORMAL];
@@ -54,8 +54,8 @@ function toPrintMessage(...message) {
     message.forEach(ms => {
         if (ms instanceof messageType_1.__SYMBLE_ARRAY__) {
             const data = ms.data;
-            let type = data.shift();
-            for (let i = 0; i < data.length; i++) {
+            let type = data[0];
+            for (let i = 1; i < data.length; i++) {
                 if (data[i] instanceof messageType_1.__SYMBLE_MESSAGE__) {
                     if (data[i].flag === define_1.DEFINE_MESSAGE.PRINTER_MESSAGE_CSS_STYLE_FLAG) {
                         type += '%c';
@@ -95,12 +95,12 @@ function print(...message) {
     console.log(...toPrintMessage(...message));
 }
 exports.print = print;
-const isPrintStyleMessage = (target) => {
+const isPrintStyleMessageArr = (target) => {
     return target instanceof messageType_1.__SYMBLE_ARRAY__;
 };
-exports.isPrintStyleMessage = isPrintStyleMessage;
-const isPrintStyleMessageArr = (target) => {
+exports.isPrintStyleMessageArr = isPrintStyleMessageArr;
+const isPrintStyleMessage = (target) => {
     return target instanceof messageType_1.__SYMBLE_MESSAGE__;
 };
-exports.isPrintStyleMessageArr = isPrintStyleMessageArr;
+exports.isPrintStyleMessage = isPrintStyleMessage;
 //# sourceMappingURL=print.js.map

@@ -46,8 +46,8 @@ export function toPrintMessage(...message) {
     message.forEach(ms => {
         if (ms instanceof __SYMBLE_ARRAY__) {
             const data = ms.data;
-            let type = data.shift();
-            for (let i = 0; i < data.length; i++) {
+            let type = data[0];
+            for (let i = 1; i < data.length; i++) {
                 if (data[i] instanceof __SYMBLE_MESSAGE__) {
                     if (data[i].flag === DEFINE_MESSAGE.PRINTER_MESSAGE_CSS_STYLE_FLAG) {
                         type += '%c';
@@ -85,10 +85,10 @@ export function toPrintMessage(...message) {
 export function print(...message) {
     console.log(...toPrintMessage(...message));
 }
-export const isPrintStyleMessage = (target) => {
+export const isPrintStyleMessageArr = (target) => {
     return target instanceof __SYMBLE_ARRAY__;
 };
-export const isPrintStyleMessageArr = (target) => {
+export const isPrintStyleMessage = (target) => {
     return target instanceof __SYMBLE_MESSAGE__;
 };
 //# sourceMappingURL=print.js.map

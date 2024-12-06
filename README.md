@@ -35,10 +35,8 @@ printError('error'); // 打印一条错误信息, 红色字体
 
 ```
 
-
-
 ```javascript
-import { Printer } from '@suey/printer';
+import {Printer} from '@suey/printer';
 // 通过 Printer 类获得你想要的日志打印格式
 
 Printer.print('hello');
@@ -53,25 +51,27 @@ Printer.printError('hello');
 // init 会改变所有 Printer 静态方法上的打印格式. 如果你需要创建一个特殊额, 请使用 new 关键字为其生成一个对象
 Printer.init({}, {});
 
-type PrintOptions = Partial<{
-  autoPrintName: boolean; // 是否自动打印 NAME
-  printName: string; // NAME 值
+type
+PrintOptions = Partial < {
+    autoPrintName: boolean; // 是否自动打印 NAME
+    printName: string; // NAME 值
 
-  autoPrintTime: boolean; // 是否自动打印时间
-  printTime: () => string; // 时间的获取函数
+    autoPrintTime: boolean; // 是否自动打印时间
+    printTime: () => string; // 时间的获取函数
 
-  autoPrintType: boolean; // 是否自动打印类型, 例如 INFO, WARN
-  printType: string; // 打印类型, 其中固定方法不能被覆盖
+    autoPrintType: boolean; // 是否自动打印类型, 例如 INFO, WARN
+    printType: string; // 打印类型, 其中固定方法不能被覆盖
 
-  autoPrintThead: boolean; // 是否自动打印所在线程, 默认为 MAIN 主线程, 你可以自定义
-  printThead: string; // 线程名字
-}>;
+    autoPrintThead: boolean; // 是否自动打印所在线程, 默认为 MAIN 主线程, 你可以自定义
+    printThead: string; // 线程名字
+} >;
 
-type ColorInfo = Partial<{ // 对应上述类型, 要求返回一个格式化样式信息, 使用 toColor 函数创造样式信息
-  printName: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
-  printTIme: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
-  printType: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
-  printThead: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
-}>;
+type
+ColorInfo = Partial < { // 对应上述类型, 要求返回一个格式化样式信息, 使用 toColor 函数创造样式信息
+    printName: __SYMBOL_ARRAY__ < [string, ...(unknown[])] >;
+    printTIme: __SYMBOL_ARRAY__ < [string, ...(unknown[])] >;
+    printType: __SYMBOL_ARRAY__ < [string, ...(unknown[])] >;
+    printThead: __SYMBOL_ARRAY__ < [string, ...(unknown[])] >;
+} >;
 ```
 

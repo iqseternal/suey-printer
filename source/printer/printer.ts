@@ -1,5 +1,5 @@
 
-import { print, toColor, printClear, type PrintTargetType, toPrintClear, type __SYMBLE_ARRAY__ } from '../core';
+import { print, toColor, printClear, type PrintTargetType, toPrintClear, type __SYMBOL_ARRAY__ } from '../core';
 
 type PrintOptions = Partial<{
   autoPrintName: boolean;
@@ -16,10 +16,10 @@ type PrintOptions = Partial<{
 }>;
 
 type ColorInfo = Partial<{
-  printName: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
-  printTIme: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
-  printType: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
-  printThead: __SYMBLE_ARRAY__<[string, ...(unknown[])]>;
+  printName: __SYMBOL_ARRAY__<[string, ...(unknown[])]>;
+  printTIme: __SYMBOL_ARRAY__<[string, ...(unknown[])]>;
+  printType: __SYMBOL_ARRAY__<[string, ...(unknown[])]>;
+  printThead: __SYMBOL_ARRAY__<[string, ...(unknown[])]>;
 }>;
 
 export class Printer {
